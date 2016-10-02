@@ -315,4 +315,4 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 export EDITOR=vim.gtk
 
-
+function rfc() { curl -s "http://www.rfc-editor.org/rfc/rfc${1}.txt" | less; }
