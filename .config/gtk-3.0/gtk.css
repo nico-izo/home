@@ -1,0 +1,25 @@
+TerminalWindow .notebook {
+  padding: 0;
+  border-width: 0;
+}
+
+TerminalWindow,
+TerminalWindow.background {
+  background-image: none;
+  background-color: #6e6e6e;
+  color: #000000;
+}
+
+TerminalWindow .notebook tab {
+  padding: 0;
+  border-image: none;
+  border-width: 0;
+  background-color: #6e6e6e;
+}
+
+TerminalWindow .notebook tab:active {
+   padding: 0;
+   border-image: none;
+   border-width: 0;
+   background-color: #d1d1d1;
+}
