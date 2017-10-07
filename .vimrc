@@ -80,7 +80,8 @@ NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': ['python']}}
 " NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': ['python']}}
 NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': ['python']}}
 NeoBundleLazy 'alfredodeza/coveragepy.vim', {'autoload': {'filetypes': ['python']}}
-NeoBundleLazy 'davidhalter/jedi-vim', {'autoload': {'filetypes': ['python']}}
+" disabled to some strange fuckery and broken files
+" NeoBundleLazy 'davidhalter/jedi-vim', {'autoload': {'filetypes': ['python']}}
 
 " C++
 NeoBundleLazy 'Mizuchi/STL-Syntax', {'autoload': {'filetypes': ['cpp']}}
@@ -133,8 +134,10 @@ NeoBundle 'jdonaldson/vaxe'
 
 " markdown
 NeoBundleLazy 'plasticboy/vim-markdown', {'autoload': {'filetypes': ['markdown', 'mkd']}}
-NeoBundleLazy 'joedicastro/vim-markdown-extra-preview', {'autoload': {'filetypes': ['markdown', 'mkd']}}
+"NeoBundleLazy 'joedicastro/vim-markdown-extra-preview', {'autoload': {'filetypes': ['markdown', 'mkd']}}
 "NeoBundleLaze 'JamshedVesuna/vim-markdown-preview'
+NeoBundleLazy 'JamshedVesuna/vim-markdown-preview', {'autoload': {'filetypes': ['markdown', 'mkd']}}
+
 " rst
 NeoBundleLazy 'Rykka/riv.vim', {'autoload': {'filetypes': ['rst']}}
 NeoBundleLazy "Rykka/InstantRst", {'autoload': {'filetypes': ['rst']}}
@@ -250,7 +253,7 @@ set concealcursor="nvi" " Менять операторы на картинки 
 
 set wildmenu " использовать меню для завершения команд
 set wildmode=full " по первому табу показывать список и завершать самой длинной командой, по второму дополнять следующим вариантом и показывать меню
-set wildignore=.svn,CVS,.git,.hg,*.o,*.a,*.luac,*.pyc,*.jar,*.stats,*.class,*.mo,*.la,*.so,*.obj,*.sw?,*.bak,*.jpg,*.png,*.xpm,*.gif,*~  " игнорируемые файлы
+set wildignore=.svn,CVS,.git,.hg,*.o,*.a,*.luac,*.pyc,*.jar,*.stats,*.class,*.mo,*.la,*.so,*.obj,*.sw?,*.bak,*.jpg,*.png,*.xpm,*.gif,*~,__pycache__  " игнорируемые файлы
 
 set complete="" " Слова откуда будем завершать
 set complete+=t " из тегов
@@ -825,7 +828,7 @@ function! s:StripTrailingWhitespace()
     normal `Z
 endfunction
 
-au FileType html,css,sass,javascript,php,ruby,psql,vim,cpp,c au BufWritePre <buffer> :silent! call <SID>StripTrailingWhitespace()
+au FileType html,css,sass,javascript,php,ruby,psql,vim,cpp,c,matlab au BufWritePre <buffer> :silent! call <SID>StripTrailingWhitespace()
 
 " Подсвечивать проблемные пробелы (пробелы перед табуляцией
 hi RedundantSpaces ctermfg=214 ctermbg=160 cterm=bold
@@ -844,6 +847,7 @@ let g:NERDTreeWinSize=35 " Ширина окна NerdTree
 let g:NERDTreeChristmasTree = 1
 let g:NERDTreeCaseSensitiveSort = 1
 let g:NERDTreeQuitOnOpen = 0
+let g:NERDTreeRespectWildIgnore = 1
 let g:nerdtree_tabs_open_on_console_startup = 1
 " set switchbuf=useopen,usetab
 " }}}
@@ -859,6 +863,8 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 " let g:VMEPhtmlreader= '/usr/bin/chromium-browser'
 
 " }}}
+
+let vim_markdown_preview_github = 1
 
 autocmd FileType markdown,mkd NeoBundleSource vim-markdown
 autocmd FileType markdown,mkd NeoBundleSource vim-markdown-extra-preview
@@ -925,9 +931,10 @@ let g:pep8_ignore="E5" " Игнорируем слишком длинные ст
 let g:pymode_run = 0 " Выключить запуск скриптов в python-mode
 let g:pymode_rope = 1 " использовать rope
 let g:pymode_breakpoint = 0 " А следовательно и скрипт breakpoint'ов
-let g:pymode_virtualenv = 0 " venv тоже не нужен
+let g:pymode_virtualenv = 1
 let g:pymode_options = 0 " отключить модификацию complete/formatoptions/number/nowrap/textwidth
-let g:pymode_lint_checkers = ['pylint', 'pep8', 'mccabe']
+let g:pymode_lint_checkers = ['pylint', 'pep8', 'mccabe', 'pyflakes']
+let g:pymode_lint_ignore = "E121,E123,E126,E226,E24,E704,W503,W504,E501"
 "let g:pymode_lint_checker = "pylint,pep8,mccabe"
 "let g:pymode_lint_checker = 'pylint,pep8,mccabe,pep257'
 let g:pymode_lint_cwindow = 1
@@ -937,8 +944,10 @@ let g:pymode_lint_jump = 0 " Не прыгать на ближайшую оши�
 let g:pymode_lint_hold = 0 " Не прыгать на quickfix
 let g:pymode_lint_maxheight = 4 " Максимальная высота cwindow pylint
 let g:pymode_rope_always_show_complete_menu = 0
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion = 1
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_completion_bind = '<C-Space>'
+let g:pymode_rope_lookup_project = 0
 
 let g:pymode_doc = 0
 let g:pymode_doc_key = 'K'
@@ -946,11 +955,14 @@ let g:pymode_syntax = 1
 let g:pymode_syntax_all = 1
 
 let g:pymode_python = 'python3'
+" let g:pymode_folding = 0
 
 " let g:jedi#auto_vim_configuration = 0
 " let g:jedi#popup_on_dot = 0
 " let g:jedi#completions_command = "<C-Tab>"
 let g:jedi#popup_select_first = 1 " выбирать первый же вариант при автокомплите
+
+au CompleteDone * pclose
 
 " indentLine {{{
 
