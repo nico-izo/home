@@ -310,9 +310,47 @@ PROMPT_COMMAND=prompt_command
 # vim: ts=4 sts=4 sw=4 et fdm=marker:
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export PATH=/usr/local/bin:$PATH
+export PATH=/home/nico-izo/.cabal/bin:/usr/local/bin:$PATH
 source /usr/local/bin/virtualenvwrapper.sh
 
+export PATH='/home/nico-izo/haxelib/flixel-tools/1,1,3/':$PATH
 export EDITOR=vim.gtk
+
+alias coverage_kobato='py.test --cov-report html:/tmp/cov_rep/ --cov=kobato kobato/tests/'
+
+settitle() {
+    echo -ne "\033]0;${1}\007"
+}
+
+alias py='python'
+alias ipy='ipython'
+alias py3='python3'
+alias ipy3='ipython3'
+
+alias wo='workon'
+alias pf='pip freeze | sort'
+alias pi='pip install'
+alias pun='pip uninstall'
+
+alias dj="python manage.py"
+alias drs="python manage.py runserver"
+alias dsh="python manage.py shell"
+alias dsm="python manage.py schemamigration"
+alias dmm="python manage.py makemigration"
+alias dm="python manage.py migrate"
+alias ddd="python manage.py dumpdata"
+alias dld="python manage.py loaddata"
+alias dt="python manage.py test"
+
+# Show all alias related python
+pya() { alias | grep 'python\|workon\|pip' | \
+    sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g";}
+
+spbw() {
+    curl 'http://wttr.in/SPb?lang=ru'
+}
+
+# so as not to be disturbed by Ctrl-S ctrl-Q in terminals:
+stty -ixon
 
 function rfc() { curl -s "http://www.rfc-editor.org/rfc/rfc${1}.txt" | less; }
