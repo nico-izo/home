@@ -132,6 +132,11 @@ NeoBundle 'junkblocker/patchreview-vim'
 " Haxe
 NeoBundle 'jdonaldson/vaxe'
 
+" javascript
+
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
+
 " markdown
 NeoBundleLazy 'plasticboy/vim-markdown', {'autoload': {'filetypes': ['markdown', 'mkd']}}
 "NeoBundleLazy 'joedicastro/vim-markdown-extra-preview', {'autoload': {'filetypes': ['markdown', 'mkd']}}
@@ -224,6 +229,7 @@ set tabstop=4 " число пробелов для таба
 set softtabstop=4 " число пробелов для таба при редактировании
 set shiftwidth=4 " число пробелов для отступа при форматировании
 set expandtab " превращать табы в пробелы
+autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 scriptencoding utf-8
 set termencoding=utf-8 " кодировка терминала
@@ -987,6 +993,13 @@ let g:rust_bang_comment_leader = 1
 let g:racer_cmd = $HOME.'/.vim/bundle/racer/target/release/racer'
 let $RUST_SRC_PATH = $HOME.'/.vim/bundle/rust/src'
 let g:ftplugin_rust_source_path = $RUST_SRC_PATH
+" }}}
+
+
+" JavaScript {{{
+
+let g:jsx_ext_required = 0
+
 " }}}
 
 " Программы на C/C++ {{{
